@@ -1,8 +1,14 @@
 import { StatusBar } from "expo-status-bar";
-import { Text, View, Image, StyleSheet } from "react-native";
+import { Text, View, Image, StyleSheet, TouchableHighlight } from "react-native";
 import { ScrollView } from "react-native";
 import { Team } from "@/components/TeamView";
+
+import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
+import React, { useCallback, useMemo, useRef } from 'react';
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+
 export default function Index() {
+  const bottomSheetRef = useRef<BottomSheet>(null);
   return (
     <View
       style={{
@@ -41,6 +47,24 @@ export default function Index() {
       />
       })}
       </View>
+
+      <GestureHandlerRootView>
+    <BottomSheet
+        snapPoints={['6%', '80%']}
+        ref={bottomSheetRef}
+      >
+        <BottomSheetView style={style.contentContainer}>
+        <Text style={{fontSize: 48, fontFamily: "Hagrid", fontWeight: 400}}>Add questions about yourself</Text>
+        <Text style={{fontSize: 48, fontFamily: "Hagrid", fontWeight: 400}}>question</Text>
+        <Text style={{fontSize: 48, fontFamily: "Hagrid", fontWeight: 400}}>rigthAnswer</Text>
+        <Text style={{fontSize: 48, fontFamily: "Hagrid", fontWeight: 400}}>wrong answer</Text>
+        <Text style={{fontSize: 48, fontFamily: "Hagrid", fontWeight: 400}}>other wrong answer</Text>
+        <TouchableHighlight>
+          Add +
+        </TouchableHighlight>
+        </BottomSheetView>
+      </BottomSheet>
+      </GestureHandlerRootView>
     </View>
   );
 }
@@ -71,6 +95,10 @@ const style = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "space-around"
+  },
+  contentContainer: {
+    flex: 1,
+    alignItems: 'center',
   },
 
 })

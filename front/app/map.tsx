@@ -9,14 +9,29 @@ import {Team, TeamProps} from '@/components/TeamView'
 import {TowerView, TowerProps} from '@/components/TowerView'
 import Waiting_Driver_Screen from "@/components/WaitScreen";
 
+function getCurrentSelected(e: any) {
+  currentSelected = e
+}
 
 export default function Map() {
     const bottomSheetRef = useRef<BottomSheet>(null);
+    const handleOpenPress = (e: any) => {
+      getCurrentSelected(e)
+      hasSelected = true
+      bottomSheetRef.current.expand()
+    }
     
     // callbacks
     const handleSheetChanges = useCallback((index: number) => {
       console.log('handleSheetChanges', index);
+      if (index == 1)
+      {
+        getCurrentSelected({})
+        hasSelected = false
+      }
+
     }, []);
+
 
     
     return (
@@ -41,45 +56,56 @@ export default function Map() {
         snapPoints={['6%', '80%']}
         ref={bottomSheetRef}
         onChange={handleSheetChanges}
+        
       >
         <BottomSheetView style={style.contentContainer}>
           <View>
-          {hasSelected ? <Text>Looking for something</Text> : <View></View>}
-          <Text>Awesome 🎉</Text>
-            <Text>Teams near you</Text>
-            {teamsNearYou.map((team, index) => {
-              return <Team key={index}
-              teamName={"Avenger fighters"}
-              exp={1200}
-              users={["https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png", "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png", "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png", "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png", "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png", "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png", "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png", "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png"]}
-              useramount={5}
+            {hasSelected ? <Text>Looking for something?</Text> : 
+            <View>
+              <Image 
+                source={{"uri" : currentSelected.image}}
               />
-            })}
-
-          <Text>Towers near you</Text>
-          {towerNearYou.map((team, index) => {
-              return <TowerView
-                slug={team.name}
-                imageurl="https://www.netmaps.net/wp-content/uploads/2016/03/Helsinki-Vector-Map.jpg"
-                location={[team.location.lat, team.location.lon]}
-                challengeId={index}
-              />
-            })}
-
-          <Text>Your regions stats</Text>
-          <Text>...</Text>
-          <Text>...</Text>
-          <Text>...</Text>
-          <Text>...</Text>
-          <Text>...</Text>
-          <Text>...</Text>
-
-
-          <Text>actions:</Text>
-          <Text>Use item</Text>
-          <Text>Repair Tower</Text>
-          <Text>Upgrade Tower</Text>
-          <Text>Attack enemies</Text>
+              <View style={style.yellowBox}>
+                <Image source={require("@/assets/images/exp.png")} />
+                <Text style={{height: 40, textAlign: "center", alignSelf: "center", fontSize: 14, marginTop: -30}}>{currentSelected.exp} XP</Text>
+                <View style={{
+              flexDirection: "row",
+              alignItems: "center"
+              }}>
+                <Image
+                  source={require("@/assets/images/person.png")}
+                />
+                <Text
+                style={{
+                  marginLeft: 10,
+                  fontSize: 20,
+                  fontFamily: "Hagrid"
+                  }}>
+                  {currentSelected.people} PPL
+                </Text>
+              </View>
+              </View>
+              <Text>{currentSelected.challenge}</Text>
+              <View style={{
+                flexDirection: "row",
+                width: "100%",
+                borderRadius: 40,
+                height: 88,
+                backgroundColor: "#EAE7DA",
+                padding: 17,
+                marginBottom: 16
+              }}>
+                <Image
+                  style={{height: 50}}
+                  source={require("@/assets/images/achivement1.png")}
+                  />
+                <Text
+                  style={{fontSize: 24, fontFamily: "Hagrid", alignSelf: "center", marginLeft: 20}}
+                  >{currentSelected.achivement}</Text>
+              </View>
+              {currentSelected.people < currentTeam.size ? <Text>Arrange meetup?</Text> : <Text>Fight!</Text>}
+            </View>
+            }
           </View>
         </BottomSheetView>
       </BottomSheet>
@@ -90,6 +116,11 @@ export default function Map() {
 }
 
 let currentSelected = {}
+
+
+let currentTeam = {
+  "size": 2
+}
 let hasSelected = false
 
 const teamsNearYou = ["Team zelda", "Team pokemon", "Team Final Fantasy"]
@@ -133,5 +164,9 @@ const style = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "space-around"
+  },
+  yellowBox: {
+    height: 40,
+    width: 120  
   }
 })
