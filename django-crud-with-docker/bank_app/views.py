@@ -17,7 +17,7 @@ def list_transaction(request):
 
 
 def new_transavction(request):
-    form = TransacaoForm(request.POST or None)
+    form = TransactionFrom(request.POST or None)
 
     if form.is_valid():
         form.save()
@@ -39,3 +39,15 @@ def delete(request, pk):
     transaction = Transacao.objects.get(pk=pk)
     transaction.delete()
     return redirect('url_list_transaction')
+
+def create_profile(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = request.user
+            profile.save()
+            return redirect('profile')
+    else:
+        form = ProfileForm()
+    return render(request, 'form.html', {'form': form})
