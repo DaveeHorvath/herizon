@@ -1,0 +1,43 @@
+networks:
+    helsinki_go_network:
+        name: helsinki_go_network
+        driver: bridge
+
+volumes:
+    database:
+
+services:
+    postgres:
+        image: postgres:14
+        container_name: postgres_c
+        user: postgres
+        env_file: ./backend/.env
+        volumes:
+            - database:/var/lib/postgresql/data/
+        healthcheck:
+            test: 'pg_isready -U postgres'
+            interval: 5s
+            timeout: 60s
+            retries: 3
+            start_period: 80s
+        networks:
+            - helsinki_go_network
+
+    backend:
+        image: backend:42
+        container_name: gunicorn
+        build:
+            context: ./backend
+        env_file: ./backend/.env
+        entrypoint: ./entrypoint.sh
+        command: bash -c "gunicorn --bind 0.0.0.0:8080 backend.wsgi"
+        depends_on:
+            postgres:
+                condition: service_healthy
+        restart: always
+        volumes:
+            - ./backend:/app
+        networks:
+            - helsinki_go_network
+
+
