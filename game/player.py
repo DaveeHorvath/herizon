@@ -1,6 +1,7 @@
 from django.db import models
 from game_units import UnitBase
 from enemy import Enemy
+from tower import Tower
 
 class Player(UnitBase):
     # icon = img
@@ -68,3 +69,21 @@ class Player(UnitBase):
         #   button.is_showed = True
         # if button.is_showed == True and team.members >= 2
         #   button.is_active = True
+        
+    # checker
+    def is_inside_tower(self, tower:Tower):
+        cur_location = self.get_location()
+        tower_location = tower.get_location()
+        if (cur_location[0] >= tower_location[0] - tower.power_radius \
+            and cur_location[0] <= tower_location[0] + tower.power_radius) \
+            and (cur_location[1] >= tower_location[1] - tower.power_radius \
+            and cur_location[1] <= tower_location[1] + tower.power_radius):
+                return True
+        return False
+    
+    def check_all_towers(self, *towers:Tower):
+        for tower in towers:
+            if self.is_inside_tower(tower):
+                tower.give_the_power(self)
+                return tower.get_name()
+        return "You are not in a tower area!"
