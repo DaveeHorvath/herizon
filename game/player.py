@@ -26,9 +26,6 @@ class Player(UnitBase):
   
     def get_level(self):
         return self.level
-  
-    def set_level(self):
-        self.level += 1
         
     def get_gold(self):
         return self.gold
@@ -59,12 +56,13 @@ class Player(UnitBase):
             self.experience -= 500
         else:
             self.experience -= 1000
+        self.level += 1
             
     def click_to_enemy(self, enemy:Enemy):
         # show info about this enemy: location, and health
         # if you are a team leader you see the "Attack" button and you can press it if the team has enough members
-        enemy.get_location(enemy)
-        enemy.get_health(enemy)
+        enemy_location = enemy.get_location(enemy)
+        emeny_health = enemy.get_health(enemy)
         # if self.team_lead == True:
         #   button.is_showed = True
         # if button.is_showed == True and team.members >= 2
