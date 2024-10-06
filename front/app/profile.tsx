@@ -27,15 +27,15 @@ export default function Profile() {
       }}
     >
       <UserProfile
-        username={"Username"}
-        imageurl={"https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&w=1200"}      
+        username={"Natalie"}
+        imageurl={"https://s3-alpha-sig.figma.com/img/67da/9fdd/d372b1b5b44ffef41eed6ceb810ddf8a?Expires=1728864000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ixh~vuvVPBOlfno4yHv7zC1~scO--w94pFTiJkZX~tz~4QflwUidZZIZLFFtrPcPvVrSJ-wtJdJ~B8UzfcS7NXSxcUkeMfE4P~OX9Uv9m5k8YfjaSngMwAYsqkI8wZ053AZZrLVm8heMt9PYO5OLra8wSePpkR6braqWP5L1~YMH4~P8RXbLkBuLmTNUd2R4HBiTWQrCbejH0pI8j5rWjhyj9GuLr0OZXBs9eknMKPgguBgBHFTzVp9cJ7uDMMB9Axulxz~BvJFK3x94NYFHn5yqwGQePxe96jvdeZ503IXM72VfwD3tYbZeev2c0TrvzKViTVsKUVr9G3trE30dPQ__"}      
       />
 
       <Text style={{fontSize: 48, fontFamily: "Hagrid", fontWeight: 400}}>Achivement</Text>
 
-      { achivements.map((x) => {
+      { achivements.map((x, index) => {
         return (
-          <View style={{
+          <View key={index} style={{
             flexDirection: "row",
             width: "100%",
             borderRadius: 40,
@@ -46,7 +46,7 @@ export default function Profile() {
           }}>
           <Image
             style={{height: 50}}
-            source={require("@/assets/images/achivement1.png")}
+            source={index==0 ? require("@/assets/images/achivement1.png") : require("@/assets/images/meme.png")}
             />
           <Text
             style={{fontSize: 24, fontFamily: "Hagrid", alignSelf: "center", marginLeft: 20}}

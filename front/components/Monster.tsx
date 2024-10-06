@@ -3,7 +3,8 @@ import { Text, View, Image, StyleSheet } from "react-native";
 export type MonsterProp = {
     name: string,
     exp: number,
-    people: number
+    people: number,
+    uri: any
 }
 
 export function Monster(prop: MonsterProp) {
@@ -20,7 +21,7 @@ return (
           }}
         >
           <Image
-            source={require("@/assets/images/monster1.png")}
+            source={prop.uri}
             style={{
               width: 70,
               height: 70,

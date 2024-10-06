@@ -19,7 +19,7 @@ export function Team (prop: TeamProps)
             <Text style={{textAlign: "center", alignSelf: "center", fontSize: 14, marginTop: -30}}>{prop.exp} XP</Text>
           </View>
           <View>
-            <Text style={{fontSize: 14, fontFamily: "Hagrid", alignSelf: "center", marginRight: 20}}>Event 12:00 someplace</Text>
+            <Text style={{fontSize: 14, fontFamily: "Hagrid", alignContent: "center", marginRight: 20, marginTop: 10}}>Event 12:00 someplace</Text>
           </View>
         </View>
         <View>
