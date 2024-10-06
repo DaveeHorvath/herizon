@@ -15,12 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from bank_app.views import home, list_transaction, new_transavction, update, delete
+from bank_app.views import home, list_transaction, new_transavction, update, delete, tower_list, monster_list
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', home),
     path('update/<int:pk>/', update, name='url_update'),
     path('delete/<int:pk>/', delete, name='url_delete'),
-    path('', list_transaction, name='url_list_transaction')
+    path('', list_transaction, name='url_list_transaction'),
+    path('towers/', tower_list, name='tower_list'),
+    path('monsters/', monster_list, name='monster_list'),
 ]

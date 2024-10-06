@@ -20,3 +20,25 @@ class Transaction(models.Model):
 
     def __str__(self):
         return self.description
+
+class Tower(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    health = models.IntegerField()
+    damage_boost = models.IntegerField(default=2) 
+
+    def __str__(self):
+        return self.name
+
+class Monster(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    health = models.IntegerField()
+    exp = models.IntegerField()
+
+    def __str__(self):
+        return self.name

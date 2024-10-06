@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from bank_app.models import Transaction
+from bank_app.models import Transaction, Tower, Monster
 from bank_app.forms import TransactionFrom
 from django.core import serializers
 from django.http import JsonResponse
@@ -39,3 +39,12 @@ def delete(request, pk):
     transaction = Transacao.objects.get(pk=pk)
     transaction.delete()
     return redirect('url_list_transaction')
+
+def tower_list(request):
+    towers = Tower.objects.all().values('name', 'latitude', 'longitude', 'health', 'damage_boost')
+    return JsonResponse(list(towers), safe=False)
+
+
+def monster_list(request):
+    towers = Monster.objects.all().values('name', 'latitude', 'longitude', 'health', 'exp')
+    return JsonResponse(list(monster), safe=False)
