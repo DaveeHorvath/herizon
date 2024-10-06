@@ -50,3 +50,7 @@ class Tower:
             self.health = 100
             player.add_experience(100)
             player.add_gold(-25)
+            
+    def give_the_power(self, player:Player):
+        player.set_damage(self.get_power_value())
+            
