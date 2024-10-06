@@ -4,11 +4,23 @@ from player import Player
 
 class Enemy(UnitBase):
     # icon = img
-    def __init__(self):
+    def __init__(self, name, experience, gold): # name, exp and gold parsed from the DB (or wrote)
+        self.name = name
         self.health = 50
+        self.experience = experience
+        self.gold = gold
+
+    def get_name(self):
+        return self.name
 
     def get_health(self):
         return self.health
+    
+    def get_experience(self):
+        return self.experience
+    
+    def get_gold(self):
+        return self.gold
     
     def die(self, *players:Player):
         # p.experience += self.experience

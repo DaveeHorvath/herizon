@@ -3,11 +3,11 @@ from player import Player
 from datetime import datetime
 
 class Tower:
-    def __init__(self, name):
+    def __init__(self, name, lat, lon): #name, lat and lon parsed from the DB
         #sprite
         self.name = name # parsed from the db
-        self.latitude = 100
-        self.longitude = 100
+        self.latitude = lat
+        self.longitude = lon
         self.time_since_defended = datetime.now().strftime("%d/%m/%Y %H:%M")
         self.health = 100 # %
         self.power_radius = 500 # meters
